@@ -1,2 +1,0 @@
-# WeatherManGenerator
-# WeatherManGenerator
