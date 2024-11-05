@@ -11,7 +11,6 @@ The Weather Dashboard is a React application that allows users to search for and
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
-- [Future Enhancements](#future-enhancements)
 - [License](#license)
 
 ## Features
