@@ -1,9 +1,7 @@
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
-const API_KEY = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 
-const BASE_URL = "https://api.openweathermap.org/data/2.5";
+const API_KEY = process.env.REACT_APP_API_KEY;
+const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
 export const fetchCurrentWeather = async (city: string) => {
   try {
