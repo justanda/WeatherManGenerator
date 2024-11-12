@@ -1,5 +1,7 @@
 # Weather Dashboard
 
+---
+
 ![GitHub License](https://img.shields.io/badge/license-MIT)
 
 The Weather Dashboard is a React application that allows users to search for and view current and 5-day weather forecasts for cities worldwide. This app utilizes the OpenWeatherMap API to provide up-to-date weather data and includes a search history feature for easy city selection. Built with TypeScript and styled with React-Bootstrap, the dashboard is optimized for a clean and user-friendly experience.
@@ -8,10 +10,10 @@ The Weather Dashboard is a React application that allows users to search for and
 
 - [Features](#features)
 - [Technologies](#technologies)
+- [Demo](#demo)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Project Structure](#project-structure)
-- [License](#license)
+- [Contributing](#contribut)
 
 ## Features
 
@@ -26,6 +28,10 @@ The Weather Dashboard is a React application that allows users to search for and
 - **React-Bootstrap**
 - **OpenWeatherMap API**
 - **Axios** for HTTP requests
+
+## Demo
+
+Click [HERE](https://weathermangenerator.onrender.com) to view demo
 
 ## Installation
 
@@ -63,6 +69,8 @@ If you'd like to contribute, please fork the repository and use a feature branch
 4. Push to the branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
 
-## License
+---
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## Contributors
+
+###### Justin Mranda-[GitHub](https://github.com/justanda) -[Website](https://voluble-cocada-c626a7.netlify.app/) -[Email](mailto:miranda.justin93@gmail.com)
