@@ -1,5 +1,5 @@
 import React from "react";
-import { ListGroup } from "react-bootstrap";
+import { ListGroup, Badge } from "react-bootstrap";
 
 type SearchHistoryProps = {
   data: string[];
@@ -11,20 +11,32 @@ const SearchHistory: React.FC<SearchHistoryProps> = ({
   onSelectCity,
 }) => {
   return (
-    <div className="mt-4">
-      <h5>Search History</h5>
-      <ListGroup>
-        {data.map((city, index) => (
-          <ListGroup.Item
-            key={index}
-            action
-            onClick={() => onSelectCity(city)}
-            className="text-primary"
-          >
-            {city}
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
+    <div className="search-history">
+      <h5>
+        <i className="bi bi-clock-history"></i> Search History
+        {data.length > 0 && (
+          <Badge bg="primary" className="ms-2">
+            {data.length}
+          </Badge>
+        )}
+      </h5>
+      {data.length > 0 ? (
+        <ListGroup>
+          {data.map((city, index) => (
+            <ListGroup.Item
+              key={index}
+              action
+              onClick={() => onSelectCity(city)}
+              className="d-flex align-items-center"
+            >
+              <i className="bi bi-geo-alt me-2"></i>
+              {city}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+      ) : (
+        <p className="text-muted">No search history yet</p>
+      )}
     </div>
   );
 };
