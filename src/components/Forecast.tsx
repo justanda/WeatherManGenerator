@@ -19,10 +19,10 @@ const Forecast: React.FC<ForecastProps> = ({ data }) => {
   return (
     <div className="forecast-container">
       <h3 className="forecast-title">5-Day Forecast</h3>
-      <Row>
+      <div className="d-flex flex-nowrap overflow-auto py-2">
         {data.map((day, index) => (
-          <Col key={index} md={2} sm={6} xs={12}>
-            <Card className="forecast-card mb-3 shadow-sm">
+          <div key={index} className="px-2">
+            <Card className="forecast-card shadow-sm h-100">
               <Card.Body className="text-center">
                 <Card.Title>{formatDate(day.dt)}</Card.Title>
                 <img
@@ -38,9 +38,9 @@ const Forecast: React.FC<ForecastProps> = ({ data }) => {
                 <p className="small">Humidity: {day.main.humidity}%</p>
               </Card.Body>
             </Card>
-          </Col>
+          </div>
         ))}
-      </Row>
+      </div>
     </div>
   );
 };
