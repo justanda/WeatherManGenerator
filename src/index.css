@@ -7,10 +7,30 @@
   font-family: "Poppins", sans-serif;
 }
 
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+html,
+body,
+#root {
   min-height: 100vh;
-  background: #ecbcbc;
+}
+
+body {
+  color: #0b1532;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
