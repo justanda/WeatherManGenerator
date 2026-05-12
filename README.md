@@ -49,6 +49,10 @@ Click [HERE](https://weathermangenerator.onrender.com) to view demo
    npm run dev
    ```
 
+## Environment Variables
+
+The app requires `VITE_GOOGLE_WEATHER_API_KEY` at build time. Add it to your local `.env` file for development and to your hosting provider's environment settings before deploying, then rebuild the app.
+
 ## Usage
 
 1. In the search bar, enter a city name and click Search.

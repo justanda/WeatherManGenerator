@@ -4,6 +4,8 @@ import {
   fetchGoogleCurrentConditions,
   fetchGoogleDailyForecast,
   fetchGoogleHourlyForecast,
+  getMissingWeatherApiKeyMessage,
+  hasWeatherApiKey,
   normalizeGoogleCurrentWeather,
   normalizeGoogleDailyForecast,
   normalizeGoogleHourlyForecast,
@@ -96,6 +98,8 @@ const fetchWeatherBundle = async (
   };
 };
 
+const WEATHER_API_KEY_MESSAGE = getMissingWeatherApiKeyMessage();
+
 export const useWeatherDashboard = () => {
   const [currentWeather, setCurrentWeather] = useState<any>(null);
   const [hourlyForecast, setHourlyForecast] = useState<
@@ -109,7 +113,9 @@ export const useWeatherDashboard = () => {
   const [unitSystem, setUnitSystem] = useState<UnitSystem>("imperial");
   const [forecastView, setForecastView] = useState<ForecastView>("daily");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(
+    hasWeatherApiKey ? "" : WEATHER_API_KEY_MESSAGE,
+  );
   const [activeCity, setActiveCity] = useState("");
   const [lastSearchTarget, setLastSearchTarget] = useState<SearchTarget | null>(
     null,
@@ -170,6 +176,12 @@ export const useWeatherDashboard = () => {
   };
 
   const executeSearch = async (target: SearchTarget, recordHistory = true) => {
+    if (!hasWeatherApiKey) {
+      setError(WEATHER_API_KEY_MESSAGE);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -229,6 +241,11 @@ export const useWeatherDashboard = () => {
   };
 
   const useCurrentLocation = () => {
+    if (!hasWeatherApiKey) {
+      setError(WEATHER_API_KEY_MESSAGE);
+      return;
+    }
+
     if (!navigator.geolocation) {
       setError("Geolocation is not supported by this browser.");
       return;
@@ -266,6 +283,11 @@ export const useWeatherDashboard = () => {
   useEffect(() => {
     if (!hasHydrated) return;
 
+    if (!hasWeatherApiKey) {
+      setError(WEATHER_API_KEY_MESSAGE);
+      return;
+    }
+
     const lastCity = localStorage.getItem(STORAGE_KEYS.lastCity);
     if (lastCity) {
       void searchCity(lastCity, false);
@@ -274,7 +296,7 @@ export const useWeatherDashboard = () => {
   }, [hasHydrated]);
 
   useEffect(() => {
-    if (!hasHydrated || !lastSearchTarget) return;
+    if (!hasHydrated || !lastSearchTarget || !hasWeatherApiKey) return;
 
     const refreshLastSearch = async () => {
       setLoading(true);

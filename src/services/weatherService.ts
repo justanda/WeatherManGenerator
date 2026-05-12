@@ -2,10 +2,20 @@ import axios from "axios";
 
 export type UnitSystem = "imperial" | "metric";
 
-const GOOGLE_WEATHER_API_KEY = import.meta.env.VITE_GOOGLE_WEATHER_API_KEY;
+const GOOGLE_WEATHER_API_KEY = (
+  import.meta as ImportMeta & {
+    env?: { VITE_GOOGLE_WEATHER_API_KEY?: string };
+  }
+).env?.VITE_GOOGLE_WEATHER_API_KEY;
 const GOOGLE_WEATHER_BASE_URL = "https://weather.googleapis.com/v1";
 const GOOGLE_GEOCODE_BASE_URL = "https://maps.googleapis.com/maps/api/geocode";
 const DEFAULT_UNITS: UnitSystem = "imperial";
+const MISSING_API_KEY_MESSAGE =
+  "This deployment is missing VITE_GOOGLE_WEATHER_API_KEY. Add it to your hosting environment and redeploy.";
+
+export const hasWeatherApiKey = Boolean(GOOGLE_WEATHER_API_KEY);
+
+export const getMissingWeatherApiKeyMessage = () => MISSING_API_KEY_MESSAGE;
 
 const unitSystemToGoogle = (units: UnitSystem) =>
   units === "imperial" ? "IMPERIAL" : "METRIC";
@@ -159,7 +169,7 @@ export type NormalizedForecastEntry = {
 
 export const fetchCoordinatesByCity = async (city: string) => {
   if (!GOOGLE_WEATHER_API_KEY) {
-    console.error("Missing VITE_GOOGLE_WEATHER_API_KEY environment variable.");
+    console.error(MISSING_API_KEY_MESSAGE);
     return null;
   }
 
@@ -199,7 +209,7 @@ export const fetchGoogleCurrentConditions = async (
   units: UnitSystem = DEFAULT_UNITS,
 ) => {
   if (!GOOGLE_WEATHER_API_KEY) {
-    console.error("Missing VITE_GOOGLE_WEATHER_API_KEY environment variable.");
+    console.error(MISSING_API_KEY_MESSAGE);
     return null;
   }
 
@@ -230,7 +240,7 @@ export const fetchGoogleHourlyForecast = async (
   hours = 24,
 ) => {
   if (!GOOGLE_WEATHER_API_KEY) {
-    console.error("Missing VITE_GOOGLE_WEATHER_API_KEY environment variable.");
+    console.error(MISSING_API_KEY_MESSAGE);
     return [];
   }
 
@@ -263,7 +273,7 @@ export const fetchGoogleDailyForecast = async (
   days = 5,
 ) => {
   if (!GOOGLE_WEATHER_API_KEY) {
-    console.error("Missing VITE_GOOGLE_WEATHER_API_KEY environment variable.");
+    console.error(MISSING_API_KEY_MESSAGE);
     return [];
   }
 

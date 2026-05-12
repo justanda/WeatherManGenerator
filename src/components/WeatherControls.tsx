@@ -8,6 +8,7 @@ type WeatherControlsProps = {
   onUseCurrentLocation: () => void;
   onSaveCurrentLocation: () => void;
   canSaveCurrentLocation: boolean;
+  isDisabled?: boolean;
 };
 
 const WeatherControls: React.FC<WeatherControlsProps> = ({
@@ -17,6 +18,7 @@ const WeatherControls: React.FC<WeatherControlsProps> = ({
   onUseCurrentLocation,
   onSaveCurrentLocation,
   canSaveCurrentLocation,
+  isDisabled,
 }) => {
   return (
     <Card className="controls-card search-section">
@@ -39,11 +41,11 @@ const WeatherControls: React.FC<WeatherControlsProps> = ({
       </div>
 
       <ButtonGroup className="controls-actions" aria-label="Weather controls">
-        <Button variant="outline-primary" onClick={onUseCurrentLocation}>
+        <Button variant="outline-primary" onClick={onUseCurrentLocation} disabled={isDisabled}>
           <i className="bi bi-geo-alt me-2"></i>
           My location
         </Button>
-        <Button variant="outline-primary" onClick={onToggleUnits}>
+        <Button variant="outline-primary" onClick={onToggleUnits} disabled={isDisabled}>
           <i className="bi bi-arrow-left-right me-2"></i>
           {unitSystem === "imperial"
             ? "Switch to metric"
@@ -52,7 +54,7 @@ const WeatherControls: React.FC<WeatherControlsProps> = ({
         <Button
           variant="primary"
           onClick={onSaveCurrentLocation}
-          disabled={!canSaveCurrentLocation}
+          disabled={!canSaveCurrentLocation || isDisabled}
         >
           <i className="bi bi-bookmark-plus me-2"></i>
           Save city

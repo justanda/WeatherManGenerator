@@ -4,13 +4,20 @@ import { Form, Button, InputGroup } from "react-bootstrap";
 type SearchFormProps = {
   onSearch: (city: string) => void;
   isLoading?: boolean;
+  isDisabled?: boolean;
 };
 
-const SearchForm: React.FC<SearchFormProps> = ({ onSearch, isLoading }) => {
+const SearchForm: React.FC<SearchFormProps> = ({
+  onSearch,
+  isLoading,
+  isDisabled,
+}) => {
   const [city, setCity] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (isDisabled) return;
+
     if (city.trim()) {
       onSearch(city);
       setCity("");
@@ -34,8 +41,9 @@ const SearchForm: React.FC<SearchFormProps> = ({ onSearch, isLoading }) => {
               onChange={(e) => setCity(e.target.value)}
               placeholder="Try San Diego, Tokyo, or London"
               aria-label="City name"
+              disabled={isDisabled}
             />
-            <Button type="submit" variant="primary" disabled={isLoading}>
+            <Button type="submit" variant="primary" disabled={isLoading || isDisabled}>
               <i className="bi bi-search me-2"></i>
               {isLoading ? "Searching" : "Search"}
             </Button>

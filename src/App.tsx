@@ -8,6 +8,7 @@ import SavedLocations from "./components/SavedLocations";
 import WeatherControls from "./components/WeatherControls";
 import { useWeatherDashboard } from "./hooks/useWeatherDashboard";
 import { useTheme } from "./hooks/useTheme";
+import { hasWeatherApiKey } from "./services/weatherService";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./weather-app.css";
@@ -41,6 +42,7 @@ const getWeatherMood = (weather: any) => {
 
 const App: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
+  const weatherApiConfigured = hasWeatherApiKey;
 
   const {
     activeCity,
@@ -105,7 +107,18 @@ const App: React.FC = () => {
 
         <Row className="g-4 align-items-start">
           <Col lg={4} md={5}>
-            <SearchForm onSearch={searchCity} isLoading={loading} />
+            {!weatherApiConfigured && (
+              <Alert variant="warning" className="status-alert mb-3">
+                <i className="bi bi-exclamation-triangle-fill me-2"></i>
+                This deployment is missing VITE_GOOGLE_WEATHER_API_KEY. Add it
+                to your hosting environment and redeploy.
+              </Alert>
+            )}
+            <SearchForm
+              onSearch={searchCity}
+              isLoading={loading}
+              isDisabled={!weatherApiConfigured}
+            />
             <WeatherControls
               activeCity={activeCity}
               unitSystem={unitSystem}
@@ -115,6 +128,7 @@ const App: React.FC = () => {
               canSaveCurrentLocation={Boolean(
                 currentWeather?.coord && currentWeather?.name,
               )}
+              isDisabled={!weatherApiConfigured}
             />
             <SearchHistory
               data={searchHistory}
